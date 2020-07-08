@@ -5,6 +5,7 @@ import Home from './components/screens/Home';
 import SignIn from './components/screens/SignIn';
 import Profile from './components/screens/Profile';
 import SignUp from './components/screens/SignUp';
+import Create from './components/screens/Create';
 import './App.css';
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
       <Route path="/signin" component={SignIn} />
       <Route path="/profile" component={Profile} />
       <Route path="/signup" component={SignUp} />
+      <Route path="/create" component={Create} />
     </BrowserRouter>
 
   );
