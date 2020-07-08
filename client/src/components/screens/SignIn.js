@@ -31,7 +31,8 @@ const SignIn = () => {
         if (data.error) {
           M.toast({ html: data.error, classes: 'rounded red darken-3' });
         } else {
-          console.log(data);
+          localStorage.setItem('jwt', data.token);
+          localStorage.setItem('user', JSON.stringify(data.user));
           M.toast({ html: data.message, classes: 'rounded green darken-2' });
           history.push('/');
         }
