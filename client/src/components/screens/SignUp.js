@@ -9,6 +9,7 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
 
   const postData = () => {
+    //  eslint-disable-next-line
     if (!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
       M.toast({ html: 'invalid email', classes: 'rounded red darken-3' });
       return;
@@ -32,7 +33,7 @@ const SignUp = () => {
         if (data.error) {
           M.toast({ html: data.error, classes: 'rounded red darken-3' });
         } else {
-          M.toast({ html: data.message, classes: 'rounded green darken-2' });
+          M.toast({ html: 'Registration successful, Please sign in', classes: 'rounded green darken-2' });
           history.push('/signin');
         }
       }).catch((err) => {
