@@ -22,9 +22,11 @@
 .gallery {
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
   justify-content: space-around;
   
 }
 .gallery-item {
   width: 30%;
+  height: 210px;
 }
