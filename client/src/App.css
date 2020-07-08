@@ -5,6 +5,12 @@ a {
 .brand-logo,h2 {
   font-family: 'Grand Hotel', cursive;
 }
+#toast-container {
+  top: 20px !important;
+ right: 20px !important;
+ left: auto !important;
+ min-width: auto !important;
+}
 .auth-card {
   padding: 2rem;
   text-align: center;

@@ -3,7 +3,7 @@ import '../../styles/create.css';
 
 const Create = () => {
   return (
-    <div className="card input-field">
+    <div className="card mycard input-field">
       <input type="text" placeholder="title" />
       <input type="text" placeholder="body" />
       <div className="file-field input-field">

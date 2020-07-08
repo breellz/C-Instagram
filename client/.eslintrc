@@ -11,6 +11,9 @@
     "react/jsx-filename-extension": [1, {
       "extensions": [".js", ".jsx"]
     }],
-    "arrow-body-style": ["error", "always"]
+   
+    "comma-dangle": 0,
+    "no-console": 0,
+    "arrow-body-style": 0
   }
 }
