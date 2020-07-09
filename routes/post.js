@@ -9,6 +9,7 @@ const router = express.Router();
 router.get('/allposts', requireLogin, (req, res) => {
   Post.find({})
     .populate('postedBy', '_id username')
+    .populate('comments.postedBy', '_id username')
     .then((posts) => {
       res.json({ posts });
     })
@@ -74,6 +75,68 @@ router.put('/unlike', requireLogin, (req, res) => {
     {
       new:true
   }).exec((err, result) => {
+    if (err) {
+      return res.status(422).json({ error: err })
+    }
+    res.json(result)
+  })
+})
+// comment delete route
+
+router.put('/deleteComment/:commentId', requireLogin, (req, res) => {
+  Post.findOne({_id: req.body.postId})
+  .populate('comments.postedBy', '_id')
+  .exec((err, post) => {
+    if (err) {
+      return res.status(422).json({ error: err })
+    }
+    const matchComment = post.comments.filter((comment)=> comment._id.toString() !== req.params.commentId.toString())
+    let index = post.comments.indexOf(matchComment)
+    post.comments.splice(index, 1)
+    post.save().then((post)=>{
+      console.log(post)
+      res.json(post)
+    }).catch((err) => {
+      console.log(err)
+    })
+   
+})
+})
+//post delete route
+
+router.delete('/delete/:postId',requireLogin, (req, res) => {
+  Post.findOne({_id: req.params.postId})
+  .populate('postedBy','_id')
+  .exec((err, post) => {
+    if (err || !post) {
+      return res.status(422).json({ error: err })
+    }
+    if (post.postedBy._id.toString() === req.user._id.toString()) {
+      post.remove()
+      .then((deleted)=> {
+        res.json(deleted)
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+  })
+})
+
+//comment route
+
+router.put('/comment', requireLogin, (req, res) => {
+  const comment = {
+    text: req.body.text,
+    postedBy: req.user
+  }
+  Post.findByIdAndUpdate(req.body.postId, {
+    $push: { comments:comment }},
+    {
+      new:true
+  })
+  .populate('comments.postedBy', '_id, username')
+  .populate('postedBy', '_id username')
+  .exec((err, result) => {
     if (err) {
       return res.status(422).json({ error: err })
     }
