@@ -5,7 +5,8 @@ import '../../styles/profile.css';
 
 const Profile = () => {
   const [userProfile, setProfile] = useState(null);
-  const { state } = useContext(UserContext);
+  const [showfollow, setShowfollow] = useState(true)
+  const { dispatch } = useContext(UserContext);
   const { userid } = useParams();
   useEffect(() => {
     fetch(`/user/${userid}`, {
@@ -18,6 +19,78 @@ const Profile = () => {
         setProfile(result);
       });
   }, []);
+
+  // folow user
+  const followUser = () => {
+    fetch('/follow', {
+      method: 'put',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`
+      },
+      body: JSON.stringify({
+        followId: userid
+      })
+    }).then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        dispatch({
+          type: 'UPDATE',
+          payload: {
+            followers: data.followers,
+            following: data.following
+          }
+        });
+        localStorage.setItem('user', JSON.stringify(data));
+        setProfile((prevState) => {
+          return {
+            ...prevState,
+            user: {
+              ...prevState.user,
+              followers: [
+                ...prevState.user.followers, data._id
+              ]
+            }
+          };
+        });
+        setShowfollow(false);
+      });
+  };
+  // unfollow user
+
+  const unfollowUser = () => {
+    fetch('/unfollow', {
+      method: 'put',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`
+      },
+      body: JSON.stringify({
+        unfollowId: userid
+      })
+    }).then((res) => res.json())
+      .then((data) => {
+        console.log('from database', data);
+        dispatch({
+          type: 'UPDATE',
+          payload: {
+            followers: data.followers,
+            following: data.following
+          }
+        });
+        localStorage.setItem('user', JSON.stringify(data));
+        setProfile((prevState) => {
+          const newFollower = prevState.user.followers.filter((follower) => follower !== data._id);
+          return {
+            ...prevState,
+            user: {
+              ...prevState.user,
+              followers: newFollower
+            }
+          };
+        });
+      });
+  };
   return (
     <>
       {userProfile ? (
@@ -38,9 +111,39 @@ const Profile = () => {
                   {' '}
                   posts
                 </h5>
-                <h5>50 followers</h5>
-                <h5>50 following</h5>
+                <h5>
+                  {userProfile.user.followers.length}
+                  {' '}
+                  followers
+                </h5>
+                <h5>
+                  {userProfile.user.following.length}
+                  {' '}
+                  following
+                </h5>
               </div>
+              {showfollow
+                ? (
+                  <button
+                    style={{ margin: '10px' }}
+                    className="btn waves-effect waves-light grey darken-4"
+                    type="submit"
+                    name="action"
+                    onClick={() => followUser()}
+                  >
+                    Follow
+                  </button>
+                ) : (
+                  <button
+                    style={{ margin: '10px' }}
+                    className="btn waves-effect waves-light red darken-4"
+                    type="submit"
+                    name="action"
+                    onClick={() => unfollowUser()}
+                  >
+                    unfollow
+                  </button>
+                )}
             </div>
           </div>
           <div className="gallery">

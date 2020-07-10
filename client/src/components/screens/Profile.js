@@ -5,7 +5,7 @@ import '../../styles/profile.css';
 const Profile = () => {
   const [userPhotos, setUserphotos] = useState([]);
   const { state, dispatch } = useContext(UserContext);
-  console.log(state)
+  console.log(state);
   useEffect(() => {
     fetch('/myposts', {
       headers: {
@@ -15,7 +15,7 @@ const Profile = () => {
       .then((result) => {
         setUserphotos(result.posts);
       });
-  }, [])
+  }, []);
   return (
     <div className="profile-container">
       <div className="profile-top">
@@ -28,9 +28,21 @@ const Profile = () => {
         <div>
           <h4>{state ? state.username : 'Loading'}</h4>
           <div className="profile-data">
-            <h5>50 posts</h5>
-            <h5>50 followers</h5>
-            <h5>50 following</h5>
+            <h5>
+              {userPhotos.length}
+              {' '}
+              posts
+            </h5>
+            <h5>
+              {state ? state.followers.length : '0'}
+              {' '}
+              followers
+            </h5>
+            <h5>
+              {state ? state.following.length : '0'}
+              {' '}
+              following
+            </h5>
           </div>
         </div>
       </div>

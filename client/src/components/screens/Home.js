@@ -147,7 +147,7 @@ const Home = () => {
         <div className="card home-card" key={item.key}>
           <h5>
             <Link
-              to={item.postedBy.id !== state.id
+              to={item.postedBy._id !== state._id
                 ? `/profile/${item.postedBy._id}` : '/profile'}
             >
               {item.postedBy.username}
