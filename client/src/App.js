@@ -11,6 +11,7 @@ import SignIn from './components/screens/SignIn';
 import Profile from './components/screens/Profile';
 import SignUp from './components/screens/SignUp';
 import Create from './components/screens/Create';
+import FollowingUsersPost from './components/screens/FollowingUsersPost';
 import OtherUsersProfile from './components/screens/OtherUsersProfile';
 import UserReducer, { initialState } from './reducers/UserReducer';
 import UserContext from './context/UserContext';
@@ -36,6 +37,7 @@ const Routing = () => {
       <Route path="/profile/:userid" component={OtherUsersProfile} />
       <Route path="/signup" component={SignUp} />
       <Route path="/create" component={Create} />
+      <Route path="/followposts" component={FollowingUsersPost} />
     </Switch>
   );
 };

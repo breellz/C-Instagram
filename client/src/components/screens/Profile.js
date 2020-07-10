@@ -27,6 +27,7 @@ const Profile = () => {
         </div>
         <div>
           <h4>{state ? state.username : 'Loading'}</h4>
+          <h5>{state ? state.email : 'Loading'}</h5>
           <div className="profile-data">
             <h5>
               {userPhotos.length}

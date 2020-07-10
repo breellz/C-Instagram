@@ -18,6 +18,20 @@ router.get('/allposts', requireLogin, (req, res) => {
     });
 });
 
+// all users I follow posts route
+router.get('/followposts', requireLogin, (req, res) => {
+  // if any of the ids in folowing is present in any of any post's postedby(id) fetch it
+  Post.find({postedBy: { $in: req.user.following }})
+    .populate('postedBy', '_id username')
+    .populate('comments.postedBy', '_id username')
+    .then((posts) => {
+      res.json({ posts });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 // create post route
 router.post('/create', requireLogin, (req, res) => {
   const { title, body, photo } = req.body;

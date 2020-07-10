@@ -10,6 +10,7 @@ const Navbar = () => {
       return [
         <li><Link to="/profile">Profile</Link></li>,
         <li><Link to="/create">Create Post</Link></li>,
+        <li><Link to="/followposts">Feed</Link></li>,
         <li>
           <button
             className="btn red darken-3"
