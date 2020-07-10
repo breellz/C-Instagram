@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import UserContext from '../../context/UserContext';
 import '../../styles/Home.css';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const [data, setData] = useState([]);
@@ -15,6 +16,8 @@ const Home = () => {
         setData(result.posts);
       });
   }, []);
+
+  // Like post
 
   const likePost = (id) => {
     fetch('/like', {
@@ -40,6 +43,9 @@ const Home = () => {
         console.log(err);
       });
   };
+
+  // unlike post
+
   const unlikePost = (id) => {
     fetch('/unlike', {
       method: 'put',
@@ -63,6 +69,9 @@ const Home = () => {
         console.log(err);
       });
   };
+
+  // make comment
+
   const makeComment = (text, postId) => {
     fetch('/comment', {
       method: 'put',
@@ -87,6 +96,9 @@ const Home = () => {
         console.log(err);
       });
   };
+
+  // delete post
+
   const deletePost = (postId) => {
     fetch(`/delete/${postId}`, {
       method: 'delete',
@@ -102,6 +114,9 @@ const Home = () => {
         setData(newData);
       });
   };
+
+  // delete comment
+
   const deleteComment = (postId, commentId) => {
     fetch(`/deleteComment/${commentId}`, {
       method: 'put',
@@ -131,7 +146,12 @@ const Home = () => {
       {data.map((item) => (
         <div className="card home-card" key={item.key}>
           <h5>
-            {item.postedBy.username}
+            <Link
+              to={item.postedBy.id !== state.id
+                ? `/profile/${item.postedBy._id}` : '/profile'}
+            >
+              {item.postedBy.username}
+            </Link>
             {item.postedBy._id === state._id && (
               <i
                 style={{ float: 'right' }}
