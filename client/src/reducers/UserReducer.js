@@ -7,6 +7,12 @@ const UserReducer = (state, action) => {
   if (action.type === 'CLEAR') {
     return null;
   }
+  if (action.type === 'UPDATE_PIC') {
+    return {
+      ...state,
+      profilePicture: action.payload
+    };
+  }
   if (action.type === 'UPDATE') {
     return {
       ...state,

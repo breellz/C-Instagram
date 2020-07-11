@@ -2,14 +2,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET } = require('../keys');
+const { JWT_SECRET } = require('../config/keys');
 
 const User = mongoose.model('User');
 const router = express.Router();
 
 // user sign up route
 router.post('/signup', (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, profilePicture } = req.body;
   if (!username || !email || !password) {
     return res.status(422).json({ error: 'All fields are required' });
   }
@@ -23,7 +23,8 @@ router.post('/signup', (req, res) => {
           const user = new User({
             username,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            profilePicture
           });
           user.save()
             .then((user) => {
@@ -55,8 +56,8 @@ router.post('/signin', (req, res) => {
           if (match) {
             // return res.json({ message: 'successfully signed in' });
             const token = jwt.sign({ _id: savedUser._id }, JWT_SECRET);
-            const {_id, username, email, followers, following } = savedUser;
-            res.json({ token, user:{_id, username, email,followers, following }, message: 'Login successful'} );
+            const {_id, username, email, followers, following, profilePicture } = savedUser;
+            res.json({ token, user:{_id, username, email,followers, following, profilePicture }, message: 'Login successful'} );
           }
           return res.status(422).json({ error: 'invalid username or password' });
         })

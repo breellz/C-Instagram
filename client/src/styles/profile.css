@@ -2,12 +2,14 @@
   max-width: 700px;
   margin: 0 auto;
 }
-.profile-top {
-  display: flex;
-  justify-content: space-between;
+.profile-top-1 {
   margin: 10px auto;
   border-bottom: 1px solid grey;
 
+}
+.profile-top {
+  display: flex;
+  justify-content: space-around;
 }
 .profile-photo img {
   width: 160px;
@@ -29,4 +31,7 @@
 .gallery-item {
   width: 30%;
   height: 210px;
+}
+.input-profile {
+  max-width: 170px !important;
 }
