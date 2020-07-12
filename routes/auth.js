@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
-const { JWT_SECRET, EMAIL, PASS } = require('../config/keys');
+const { JWT_SECRET, EMAIL, PASS, URL } = require('../config/keys');
 
 const User = mongoose.model('User');
 const router = express.Router();
@@ -118,7 +118,7 @@ router.post('/resetpassword', (req, res)=> {
             subject: 'Password reset',
             html: `
             <p>You requested a password reset</p>
-            <h5>Click this <a href="https://localhost:3000/reset/${token}">link</> to reset</h5>
+            <h5>Click this <a href="${URL}/reset/${token}">link</> to reset</h5>
             `
           })
         })
