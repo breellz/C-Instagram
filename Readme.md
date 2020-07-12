@@ -1,10 +1,10 @@
 
 
 <p align="center">
-  <h3 align="center">Expensify</h3>
+  <h3 align="center">C-Instagram</h3>
 
   <p align="center">
-    Get your expenses under control
+    Share it all
     <br />
     <a href="https://github.com/breellz/C-Instagram"><strong>Explore the docs »</strong></a>
     <br />
