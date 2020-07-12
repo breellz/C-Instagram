@@ -120,6 +120,8 @@ router.post('/resetpassword', (req, res)=> {
             <p>You requested a password reset</p>
             <h5>Click this <a href="${URL}/reset/${token}">link</> to reset</h5>
             `
+          }).catch((err) => {
+            console.log(err);
           })
         })
         res.json({message: 'Password reset instructions have been sent to your email address'})
