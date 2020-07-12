@@ -19,6 +19,7 @@ const SignIn = () => {
       M.toast({ html: 'password must be 6 characters or more', classes: 'rounded red darken-3' });
       return;
     }
+    M.toast({ html: 'In progress, Please wait', classes: 'rounded green darken-2', displayLength: Infinity });
     fetch('/signin', {
       method: 'post',
       headers: {
@@ -33,6 +34,7 @@ const SignIn = () => {
         if (data.error) {
           M.toast({ html: data.error, classes: 'rounded red darken-3' });
         } else {
+          M.Toast.dismissAll();
           localStorage.setItem('jwt', data.token);
           localStorage.setItem('user', JSON.stringify(data.user));
           dispatch({ type: 'USER', payload: data.user });

@@ -13,6 +13,7 @@ const Create = () => {
   // post to DB after image is uploaded
   useEffect(() => {
     if (imgurl) {
+      M.toast({ html: 'In-progress, Please wait', classes: 'rounded green darken-2', displayLength: Infinity });
       fetch('/create', {
         method: 'post',
         headers: {
