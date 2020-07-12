@@ -1,12 +1,9 @@
-import React, { useState, useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import M from 'materialize-css';
-import UserContext from '../../context/UserContext';
 
-const SignIn = () => {
-  const { dispatch } = useContext(UserContext);
+const Reset = () => {
   const history = useHistory();
-  const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
 
   const postData = () => {
@@ -15,17 +12,12 @@ const SignIn = () => {
       M.toast({ html: 'invalid email', classes: 'rounded red darken-3' });
       return;
     }
-    if (password.length < 6) {
-      M.toast({ html: 'password must be 6 characters or more', classes: 'rounded red darken-3' });
-      return;
-    }
-    fetch('/signin', {
+    fetch('/resetpassword', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        password,
         email
       })
     }).then((res) => res.json())
@@ -33,11 +25,8 @@ const SignIn = () => {
         if (data.error) {
           M.toast({ html: data.error, classes: 'rounded red darken-3' });
         } else {
-          localStorage.setItem('jwt', data.token);
-          localStorage.setItem('user', JSON.stringify(data.user));
-          dispatch({ type: 'USER', payload: data.user });
           M.toast({ html: data.message, classes: 'rounded green darken-2' });
-          history.push('/');
+          history.push('/signin');
         }
       }).catch((err) => {
         console.log(err);
@@ -48,20 +37,17 @@ const SignIn = () => {
       <div className="card auth-card input-field">
         <h2>C-Instagram</h2>
         <input type="text" placeholder="email" value={email} onChange={(e) => { setEmail(e.target.value); }} />
-        <input type="password" placeholder="password" value={password} onChange={(e) => { setPassword(e.target.value); }} />
         <button
           className="btn waves-effect waves-light grey darken-4"
           type="submit"
           name="action"
           onClick={() => postData()}
         >
-          Sign In
+          Reset password
         </button>
-        <p><Link to="/signup">Sign up instead?</Link></p>
-        <p><Link to="/reset">Forgot Password?</Link></p>
       </div>
     </div>
   );
 };
 
-export default SignIn;
+export default Reset;

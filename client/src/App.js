@@ -11,6 +11,8 @@ import SignIn from './components/screens/SignIn';
 import Profile from './components/screens/Profile';
 import SignUp from './components/screens/SignUp';
 import Create from './components/screens/Create';
+import Reset from './components/screens/Reset';
+import NewPassword from './components/screens/NewPassword';
 import FollowingUsersPost from './components/screens/FollowingUsersPost';
 import OtherUsersProfile from './components/screens/OtherUsersProfile';
 import UserReducer, { initialState } from './reducers/UserReducer';
@@ -25,7 +27,7 @@ const Routing = () => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
       dispatch({ type: 'USER', payload: user });
-    } else {
+    } else if (!history.location.pathname.startsWith('/reset')) {
       history.push('/signin');
     }
   }, []);
@@ -37,6 +39,8 @@ const Routing = () => {
       <Route path="/profile/:userid" component={OtherUsersProfile} />
       <Route path="/signup" component={SignUp} />
       <Route path="/create" component={Create} />
+      <Route path="/reset" component={Reset} exact />
+      <Route path="/reset/:token" component={NewPassword} />
       <Route path="/followposts" component={FollowingUsersPost} />
     </Switch>
   );

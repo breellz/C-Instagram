@@ -8,10 +8,10 @@ const app = express();
 
 const PORT = process.env.PORT || 5000;
 
-const { LOCALDB, MONGOURI } = require('./config/keys');
+const { MONGOURI } = require('./config/keys');
 
-const DB = LOCALDB || MONGOURI;
-mongoose.connect(DB, {
+
+mongoose.connect(MONGOURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
